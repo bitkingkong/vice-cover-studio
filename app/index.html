@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Cover Studio — GTA-style cover art maker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">VCS</span>
+    <div>
+      <h1>Vice Cover Studio</h1>
+      <p>Turn any photo into a GTA-style multi-panel cover. Photos never leave your machine.</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <label class="size-label" for="exportSize">Export size</label>
+    <select id="exportSize">
+      <option value="landscape" selected>1920 × 1080 · Landscape</option>
+      <option value="square">1080 × 1080 · Square</option>
+      <option value="portrait">1080 × 1350 · Portrait</option>
+    </select>
+    <button id="exportBtn" class="btn-primary" type="button">Export PNG</button>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="controls" aria-label="Cover controls">
+    <h2>1 · Photos</h2>
+    <div id="dropZone" class="drop-zone" tabindex="0" role="button" aria-label="Add photos">
+      <strong>Drop photos here</strong> or click to choose files
+      <input id="fileInput" type="file" accept="image/*" multiple hidden>
+    </div>
+    <p class="hint" id="photoCount">0 photos loaded</p>
+    <div class="samples">
+      <button id="sampleBoulevard" type="button" class="sample-btn">
+        <img src="samples/boulevard.jpg" alt="Sample photo: neon boulevard at dusk">
+        <span>Boulevard · sample</span>
+      </button>
+      <button id="samplePier" type="button" class="sample-btn">
+        <img src="samples/pier.jpg" alt="Sample photo: pier over the sea at sunset">
+        <span>Pier · sample</span>
+      </button>
+    </div>
+    <div id="photoList" class="photo-list"></div>
+
+    <h2>2 · Layout</h2>
+    <div class="seg" role="group" aria-label="Panel layout">
+      <button type="button" data-layout="diagonal" class="active">3-Panel Diagonal</button>
+      <button type="button" data-layout="grid">4-Panel Grid</button>
+      <button type="button" data-layout="hero">Hero + Strip</button>
+    </div>
+
+    <h2>3 · Colour grade</h2>
+    <div class="seg" role="group" aria-label="Colour grade">
+      <button type="button" data-grade="sunset" class="active">Sunset</button>
+      <button type="button" data-grade="neon">Neon</button>
+      <button type="button" data-grade="noir">Noir</button>
+    </div>
+
+    <h2>4 · Caption</h2>
+    <label class="field-label" for="titleInput">Title</label>
+    <input id="titleInput" type="text" value="VICE NIGHTS" maxlength="40">
+    <label class="field-label" for="subtitleInput">Subtitle</label>
+    <input id="subtitleInput" type="text" value="A STORY IN THREE PANELS" maxlength="60">
+    <div class="field-row">
+      <label class="field-label" for="captionSize">Title size <span id="captionSizeVal">100%</span></label>
+      <input id="captionSize" type="range" min="0.7" max="1.4" step="0.05" value="1">
+    </div>
+    <div class="field-row">
+      <label class="field-label" for="captionPos">Title position</label>
+      <select id="captionPos">
+        <option value="bottom" selected>Bottom</option>
+        <option value="middle">Middle</option>
+        <option value="top">Top</option>
+      </select>
+    </div>
+    <div class="field-label">Title colour</div>
+    <div class="swatches" role="group" aria-label="Title colour">
+      <button type="button" data-caption-color="#ffffff" class="swatch white active" aria-label="White"></button>
+      <button type="button" data-caption-color="#ffd166" class="swatch gold" aria-label="Gold"></button>
+      <button type="button" data-caption-color="#00e5ff" class="swatch cyan" aria-label="Cyan"></button>
+      <button type="button" data-caption-color="#ff5e7a" class="swatch pink" aria-label="Pink"></button>
+    </div>
+
+    <h2>5 · Crop this panel</h2>
+    <div id="panelTabs" class="seg" role="group" aria-label="Active panel">
+      <button type="button" class="active">Panel 1</button>
+      <button type="button">Panel 2</button>
+      <button type="button">Panel 3</button>
+      <button type="button">Panel 4</button>
+    </div>
+    <p class="hint">Tip: drag the photo inside the preview to pan it.</p>
+    <div class="field-row">
+      <label class="field-label" for="zoom">Zoom <span id="zoomVal">100%</span></label>
+      <input id="zoom" type="range" min="1" max="2.5" step="0.05" value="1">
+    </div>
+    <div class="field-row">
+      <label class="field-label" for="panelPhoto">Photo in this panel</label>
+      <select id="panelPhoto"></select>
+    </div>
+    <button id="resetCrop" type="button" class="btn-ghost">Reset crop</button>
+    <p class="hint" id="exportNote"></p>
+  </section>
+
+  <section class="stage" aria-label="Live preview">
+    <canvas id="preview" width="960" height="540"></canvas>
+    <p class="stage-hint">Live preview — drag a panel to pan its photo · one photo can fill every panel, or each panel its own</p>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Original design. No Rockstar Games logo, artwork or font. Fonts: Anton, Bebas Neue &amp; Inter under the SIL Open Font License — see <span class="mono">app/fonts/</span>.</p>
+</footer>
+
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
